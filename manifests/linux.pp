@@ -25,6 +25,9 @@ class firewall::linux (
     ensure => present,
   }
 
+  anchor {'firewall::linux::start': }
+  anchor {'firewall::linux::end': }
+
   case $::operatingsystem {
     'RedHat', 'CentOS', 'Fedora', 'Scientific', 'SL', 'SLC', 'Ascendos',
     'CloudLinux', 'PSBM', 'OracleLinux', 'OVS', 'OEL', 'Amazon', 'XenServer': {

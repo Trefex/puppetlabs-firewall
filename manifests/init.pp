@@ -25,6 +25,9 @@ class firewall (
     }
   }
 
+  anchor {'firewall::start': }
+  anchor {'firewall::end': }
+
   case $::kernel {
     'Linux': {
       Anchor['firewall::start']->
