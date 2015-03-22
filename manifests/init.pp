@@ -27,11 +27,13 @@ class firewall (
 
   case $::kernel {
     'Linux': {
+      Anchor['firewall::start']->
       class { "${title}::linux":
         ensure       => $ensure,
         service_name => $service_name,
         package_name => $package_name,
-      }
+      }->
+      Anchor['firewall::end']
     }
     default: {
       fail("${title}: Kernel '${::kernel}' is not currently supported")

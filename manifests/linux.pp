@@ -37,13 +37,15 @@ class firewall::linux (
       }
     }
     'Debian', 'Ubuntu': {
+      Anchor['firewall::linux::start']->
       class { "${title}::debian":
         ensure       => $ensure,
         enable       => $enable,
         package_name => $package_name,
         service_name => $service_name,
         require      => Package['iptables'],
-      }
+      }->
+      Anchor['firewall::linux::end']
     }
     'Archlinux': {
       class { "${title}::archlinux":
