@@ -31,13 +31,15 @@ class firewall::linux (
   case $::operatingsystem {
     'RedHat', 'CentOS', 'Fedora', 'Scientific', 'SL', 'SLC', 'Ascendos',
     'CloudLinux', 'PSBM', 'OracleLinux', 'OVS', 'OEL', 'Amazon', 'XenServer': {
+      Anchor['firewall::linux::start']->
       class { "${title}::redhat":
         ensure       => $ensure,
         enable       => $enable,
         package_name => $package_name,
         service_name => $service_name,
         require      => Package['iptables'],
-      }
+      }->
+      Anchor['firewall::linux::end']
     }
     'Debian', 'Ubuntu': {
       Anchor['firewall::linux::start']->
@@ -51,22 +53,26 @@ class firewall::linux (
       Anchor['firewall::linux::end']
     }
     'Archlinux': {
+      Anchor['firewall::linux::start']->
       class { "${title}::archlinux":
         ensure       => $ensure,
         enable       => $enable,
         package_name => $package_name,
         service_name => $service_name,
         require      => Package['iptables'],
-      }
+      }->
+      Anchor['firewall::linux::end']
     }
     'Gentoo': {
+      Anchor['firewall::linux::start']->
       class { "${title}::gentoo":
         ensure       => $ensure,
         enable       => $enable,
         package_name => $package_name,
         service_name => $service_name,
         require      => Package['iptables'],
-      }
+      }->
+      Anchor['firewall::linux::end']
     }
     default: {}
   }
