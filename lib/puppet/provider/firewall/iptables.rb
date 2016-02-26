@@ -138,7 +138,7 @@ Puppet::Type.type(:firewall).provide :iptables, :parent => Puppet::Provider::Fir
   #                ones.
   #
   @module_to_argument_mapping = {
-    :physdev   => [:physdev_in, :physdev_out, :physdev_is_bridged],
+    :physdev   => [:physdev_in, :physdev_out, :physdev_is_bridged, :neg_physdev_is_bridged],
     :addrtype  => [:src_type, :dst_type],
     :iprange   => [:src_range, :dst_range],
     :owner     => [:uid, :gid],
