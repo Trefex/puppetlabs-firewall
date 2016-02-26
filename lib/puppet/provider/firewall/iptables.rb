@@ -107,7 +107,8 @@ Puppet::Type.type(:firewall).provide :iptables, :parent => Puppet::Provider::Fir
     :uid                => "--uid-owner",
     :physdev_in         => "--physdev-in",
     :physdev_out        => "--physdev-out",
-    :physdev_is_bridged => "--physdev-is-bridged"
+    :physdev_is_bridged => "--physdev-is-bridged",
+    :neg_physdev_is_bridged => "! --physdev-is-bridged"
   }
 
   # These are known booleans that do not take a value, but we want to munge
@@ -120,10 +121,11 @@ Puppet::Type.type(:firewall).provide :iptables, :parent => Puppet::Provider::Fir
     :rsource,
     :rttl,
     :socket,
-    :physdev_is_bridged
+    :physdev_is_bridged,
+    :neg_physdev_is_bridged
   ]
 
-  # Properties that use "-m <ipt module name>" (with the potential to have multiple 
+  # Properties that use "-m <ipt module name>" (with the potential to have multiple
   # arguments against the same IPT module) must be in this hash. The keys in this
   # hash are the IPT module names, with the values being an array of the respective
   # supported arguments for this IPT module.
@@ -217,7 +219,7 @@ Puppet::Type.type(:firewall).provide :iptables, :parent => Puppet::Provider::Fir
   # changes between puppet runs, the changed rules will be re-applied again.
   # This order can be determined by going through iptables source code or just tweaking and trying manually
   @resource_list = [
-    :table, :source, :destination, :iniface, :outiface, :physdev_in, :physdev_out, :physdev_is_bridged, :proto, :isfragment,
+    :table, :source, :destination, :iniface, :outiface, :physdev_in, :physdev_out, :physdev_is_bridged, :neg_physdev_is_bridged, :proto, :isfragment,
     :stat_mode, :stat_every, :stat_packet, :stat_probability,
     :src_range, :dst_range, :tcp_flags, :uid, :gid, :mac_source, :sport, :dport, :port,
     :src_type, :dst_type, :socket, :pkttype, :name, :ipsec_dir, :ipsec_policy,
